@@ -34,13 +34,13 @@ def programa_principal():
     configurar_sistema()
     
     while True:
-        temperatura_falsa = random.randint(5, 30)
+        temperatura = random.randint(5, 30)
         
-        controlar_clima(temperatura_falsa)
+        controlar_clima(temperatura)
         time.sleep(2.0)
 
-if __name__ == '__main__':
-    try:
-        programa_principal()
-    except KeyboardInterrupt:
-        GPIO.cleanup()
+
+try:
+	programa_principal()
+except KeyboardInterrupt:
+	GPIO.cleanup()

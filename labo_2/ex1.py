@@ -43,8 +43,6 @@ def estado_4():
     time.sleep(0.1)
 
 
-
-configurar_pines()
 try:
 	GPIO.setwarnings(False)
 	GPIO.setmode(GPIO.BCM)
@@ -53,7 +51,7 @@ try:
 	GPIO.setup(LED2, GPIO.OUT)
 	GPIO.setup(BOTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-	GPIO.add_event_detect(BOTON, GPIO.FALLING, callback=cambiar_estado, bouncetime=300) #Interrupción
+	GPIO.add_event_detect(BOTON, GPIO.FALLING, callback=cambiar_estado, bouncetime=300)
 	while True:
 		if estado_actual == 1:
 		    estado_1()

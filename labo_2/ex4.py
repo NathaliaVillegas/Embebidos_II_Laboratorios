@@ -49,50 +49,16 @@ try:
 		GPIO.output(led3, GPIO.LOW)
 		GPIO.output(led4, GPIO.LOW)
 
-		if controller == True:
+		while controller == True:
+			print("Entraste a High")
+			time.sleep(1)
 			GPIO.output(leds[selector], GPIO.HIGH)
 			time.sleep(1 + time_adder)
-			controller = False
-			print("Entraste a High")
+			if GPIO.input(seconds) != GPIO.LOW:
+				controller = False
 
 except KeyboardInterrupt:
 	GPIO.cleanup()
 	
 	
-'''
-^Camber@raspberrypi:~/Documentos $ python3 labo_2/ex4.py 
-Presionaste selector
-Presionaste time
-Entraste a High
-Presionaste selector
-Presionaste time
-Entraste a High
-Presionaste time
-Presionaste selector
-Presionaste time
-Entraste a High
-Presionaste time
-Presionaste selector
-Presionaste time
-Entraste a High
-Presionaste time
-Presionaste selector
-Presionaste time
-Entraste a High
-Presionaste selector
-Presionaste time
-Entraste a High
-Presionaste time
-Presionaste selector
-Presionaste time
-Entraste a High
-Presionaste time
-Presionaste selector
-Presionaste time
-Entraste a High
-Presionaste time
-Presionaste selector
-Entraste a High
-Presionaste time
-^Camber@raspberrypi:~/Documentos $ 
-'''
+

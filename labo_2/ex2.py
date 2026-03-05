@@ -28,7 +28,6 @@ table = [
 ]
 
 cont = 0
-estado_actual = 0
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
