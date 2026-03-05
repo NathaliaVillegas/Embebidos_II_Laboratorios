@@ -1,9 +1,9 @@
 import RPi.GPIO as GPIO
 import time
 
-LED1 = 14
-LED2 = 15
-BOTON = 18
+LED1 = 26
+LED2 = 19
+BOTON = 5
 
 estado_actual = 1
 

@@ -3,7 +3,7 @@ import time
 import random
 
 PIN_CALENTADOR = 26
-PIN_VENTILADOR = 19
+PIN_VENTILADOR = 0
 
 def configurar_sistema():
     GPIO.setwarnings(False)

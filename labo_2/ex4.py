@@ -9,7 +9,7 @@ select = 5
 seconds = 21
 
 leds = [led1, led2, led3, led4]
-selector = 0
+selector = -1
 time_adder = 0
 controller = False
 

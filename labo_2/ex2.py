@@ -6,7 +6,7 @@ led1 = 19
 led2 = 13
 led3 = 6
 add = 5
-res = 0
+res = 21
 
 table = [
     [0,0,0,0],
