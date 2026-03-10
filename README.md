@@ -11,9 +11,9 @@ Docente de materia:
 
 Integrantes:
 #Alexander Z. Durán
-#Thays A. Mayta
+#Thais A. Mayta
 #Leonardo R. Flores
-#Natalia V. Loza
+#Nathalia V. Loza
 #Julian C. Gutierrez
 
 Last update: 05/03/2026
