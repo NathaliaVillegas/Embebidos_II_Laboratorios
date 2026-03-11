@@ -81,27 +81,20 @@ main(void)
     //
     while(1)
     {
-        GPIOPinWrite(GPIO_PORTN_BASE, leds[0], leds[0]);
-        GPIOPinWrite(GPIO_PORTN_BASE, leds[1], leds[1]);
-        GPIOPinWrite(GPIO_PORTF_BASE, leds[2], 0x00);
-        GPIOPinWrite(GPIO_PORTF_BASE, leds[3], 0x00);
-        Delay(2);
-        GPIOPinWrite(GPIO_PORTN_BASE, leds[0], 0x00);
-        GPIOPinWrite(GPIO_PORTN_BASE, leds[1], leds[1]);
-        GPIOPinWrite(GPIO_PORTF_BASE, leds[2], leds[2]);
-        GPIOPinWrite(GPIO_PORTF_BASE, leds[3], 0x00);
-        Delay(2);
-        GPIOPinWrite(GPIO_PORTN_BASE, leds[0], 0x00);
-        GPIOPinWrite(GPIO_PORTN_BASE, leds[1], 0x00);
-        GPIOPinWrite(GPIO_PORTF_BASE, leds[2], leds[2]);
-        GPIOPinWrite(GPIO_PORTF_BASE, leds[3], leds[3]);
-        Delay(2);
-        GPIOPinWrite(GPIO_PORTN_BASE, leds[0], leds[0]);
-        GPIOPinWrite(GPIO_PORTN_BASE, leds[1], leds[1]);
-        GPIOPinWrite(GPIO_PORTF_BASE, leds[2], leds[2]);
-        GPIOPinWrite(GPIO_PORTF_BASE, leds[3], leds[3]);
+        GPIOPinWrite(GPIO_PORTN_BASE, leds[0] | leds[1], leds[0] | leds[1]);
+        GPIOPinWrite(GPIO_PORTF_BASE, leds[2] | leds[3], 0x00);
         Delay(2);
 
+        GPIOPinWrite(GPIO_PORTN_BASE, leds[0] | leds[1], leds[1]);
+        GPIOPinWrite(GPIO_PORTF_BASE, leds[2] | leds[3], leds[2]);
+        Delay(2);
 
+        GPIOPinWrite(GPIO_PORTN_BASE, leds[0] | leds[1], 0x00);
+        GPIOPinWrite(GPIO_PORTF_BASE, leds[2] | leds[3], leds[2] | leds[3]);
+        Delay(2);
+
+        GPIOPinWrite(GPIO_PORTN_BASE, leds[0] | leds[1], leds[0] | leds[1]);
+        GPIOPinWrite(GPIO_PORTF_BASE, leds[2] | leds[3], leds[2] | leds[3]);
+        Delay(2);
     }
 }
