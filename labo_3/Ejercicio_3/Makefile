@@ -30,12 +30,7 @@ PART=TM4C1294NCPDT
 #
 # The base directory for TivaWare.
 #
-RPART=TM4C1294NCPDT
-
-#
-# The base directory for TivaWare.
-#
-ROOT=/home/nath/Documentos/SDKs/Tiva/TivaWare
+ROOT=../../../../..
 
 #
 # Include the common make definitions.
@@ -45,12 +40,13 @@ include ${ROOT}/makedefs
 #
 # Where to find header files that do not live in the source directory.
 #
-IPATH=/home/nath/Documentos/SDKs/Tiva/TivaWare
+IPATH=../../../../..
+
 #
 # The default rule, which causes the blinky example to be built.
 #
 all: ${COMPILER}
-all: ${COMPILER}/labito3.axf
+all: ${COMPILER}/lab3ex3.axf
 
 #
 # The rule to clean out all the build products.
@@ -67,12 +63,12 @@ ${COMPILER}:
 #
 # Rules for building the blinky example.
 #
-${COMPILER}/labito3.axf: ${COMPILER}/labito3.o
-${COMPILER}/labito3.axf: ${COMPILER}/startup_${COMPILER}.o
-${COMPILER}/labito3.axf: ${ROOT}/driverlib/${COMPILER}/libdriver.a
-${COMPILER}/labito3.axf: labito3.ld
-SCATTERgcc_labito3=labito3.ld
-ENTRY_labito3=ResetISR
+${COMPILER}/lab3ex3.axf: ${COMPILER}/lab3ex3.o
+${COMPILER}/lab3ex3.axf: ${COMPILER}/startup_${COMPILER}.o
+${COMPILER}/lab3ex3.axf: ${ROOT}/driverlib/${COMPILER}/libdriver.a
+${COMPILER}/lab3ex3.axf: lab3ex3.ld
+SCATTERgcc_lab3ex3=lab3ex3.ld
+ENTRY_lab3ex3=ResetISR
 CFLAGSgcc=-DTARGET_IS_TM4C129_RA1
 
 #
