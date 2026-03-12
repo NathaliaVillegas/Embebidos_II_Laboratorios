@@ -1,0 +1,100 @@
+//*****************************************************************************
+//
+// ejercicio5.c - 
+//
+// Copyright (c) 2013-2020 Texas Instruments Incorporated.  All rights reserved.
+// Software License Agreement
+// 
+// Texas Instruments (TI) is supplying this software for use solely and
+// exclusively on TI's microcontroller products. The software is owned by
+// TI and/or its suppliers, and is protected under applicable copyright
+// laws. You may not combine this software with "viral" open-source
+// software in order to form a larger program.
+// 
+// THIS SOFTWARE IS PROVIDED "AS IS" AND WITH ALL FAULTS.
+// NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT
+// NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. TI SHALL NOT, UNDER ANY
+// CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
+// DAMAGES, FOR ANY REASON WHATSOEVER.
+// 
+// This is part of revision 2.2.0.295 of the EK-TM4C1294XL Firmware Package.
+//
+//*****************************************************************************
+
+#include <stdint.h>
+#include <stdbool.h>
+#include "inc/hw_memmap.h"
+#include "driverlib/debug.h"
+#include "driverlib/gpio.h"
+#include "driverlib/sysctl.h"
+
+
+
+//*****************************************************************************
+//
+// The error routine that is called if the driver library encounters an error.
+//
+//*****************************************************************************
+#ifdef DEBUG
+void
+__error__(char *pcFilename, uint32_t ui32Line)
+{
+    while(1);
+}
+#endif
+
+//*****************************************************************************
+uint8_t leds[4] = {GPIO_PIN_1, GPIO_PIN_0, GPIO_PIN_4, GPIO_PIN_0};
+
+void Delay(float time){
+    SysCtlDelay((time * 16000000 / 3));
+}
+
+int
+main(void)
+{
+    //
+    // Enable the GPIO port that is used for the on-board LED.
+    //
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPION);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
+
+    //
+    // Check if the peripheral access is enabled.
+    //
+    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPION))
+    {
+    }
+
+    //
+    // Enable the GPIO pin for the LED (PN0).  Set the direction as output, and
+    // enable the GPIO pin for digital function.
+    //
+    GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, leds[0]);
+    GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, leds[1]);
+    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, leds[2]);
+    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, leds[3]);
+
+    //
+    // Loop forever.
+    //
+    while(1)
+    {
+        GPIOPinWrite(GPIO_PORTN_BASE, leds[0] | leds[1], leds[0] | leds[1]);
+        GPIOPinWrite(GPIO_PORTF_BASE, leds[2] | leds[3], 0x00);
+        Delay(2);
+
+        GPIOPinWrite(GPIO_PORTN_BASE, leds[0] | leds[1], leds[1]);
+        GPIOPinWrite(GPIO_PORTF_BASE, leds[2] | leds[3], leds[2]);
+        Delay(2);
+
+        GPIOPinWrite(GPIO_PORTN_BASE, leds[0] | leds[1], 0x00);
+        GPIOPinWrite(GPIO_PORTF_BASE, leds[2] | leds[3], leds[2] | leds[3]);
+        Delay(2);
+
+        GPIOPinWrite(GPIO_PORTN_BASE, leds[0] | leds[1], leds[0] | leds[1]);
+        GPIOPinWrite(GPIO_PORTF_BASE, leds[2] | leds[3], leds[2] | leds[3]);
+        Delay(2);
+    }
+}
