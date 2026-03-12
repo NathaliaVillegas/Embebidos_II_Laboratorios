@@ -1,9 +1,19 @@
 PART=TM4C1294NCPDT
-ROOT=/home/julian/TivaWarePath
 
+#
+# The base directory for TivaWare.
+#
+ROOT=/home/nath/Documentos/SDKs/Tiva/TivaWare
+
+#
+# Include the common make definitions.
+#
 include ${ROOT}/makedefs
 
-IPATH=${ROOT}
+#
+# Where to find header files that do not live in the source directory.
+#
+IPATH=/home/nath/Documentos/SDKs/Tiva/TivaWare
 
 all: ${COMPILER}
 all: ${COMPILER}/Ejer_tiva1.axf
