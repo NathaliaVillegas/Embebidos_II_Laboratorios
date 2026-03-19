@@ -54,6 +54,7 @@ void interrupcion1(void){
 }
 
 
+
 int main(void)
 {
     //Clock Conifguration
@@ -78,6 +79,7 @@ int main(void)
     //Enable Timer Peripheral
 
     SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);
+    
 
     //Set Timmer
     TimerConfigure(TIMER0_BASE, TIMER_CFG_PERIODIC);
