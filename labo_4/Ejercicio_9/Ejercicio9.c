@@ -25,10 +25,13 @@ __error__(char *pcFilename, uint32_t ui32Line)
 //*****************************************************************************
 // Global variables 
 
-uint32_t FS = 120000000 * 1;
+uint32_t FS = 120000000 * 5;
 uint32_t counter = 1;
 
 void interrupcion1(void){
+    
+    TimerIntClear(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
+
     switch (counter) {
         case 1:
         GPIOPinWrite(GPIO_PORTN_BASE, 0x03, 0x01);
