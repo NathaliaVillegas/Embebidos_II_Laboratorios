@@ -51,8 +51,7 @@ void Delay(float time){
     SysCtlDelay((time * 16000000 / 3));
 }
 
-int
-main(void)
+int main(void)
 {
     //
     // Enable the GPIO port that is used for the on-board LED.
