@@ -26,14 +26,14 @@ int main(void) {
     while(1) {
         
         if(GPIOPinRead(GPIO_PORTJ_BASE, GPIO_PIN_0) == 0) {
-            SysCtlDelay(ui32SysClock / 12); /
+            SysCtlDelay(ui32SysClock / 12); 
             if(contador < 4) contador++;
             while(GPIOPinRead(GPIO_PORTJ_BASE, GPIO_PIN_0) == 0); 
         }
 
 
         if(GPIOPinRead(GPIO_PORTJ_BASE, GPIO_PIN_1) == 0) {
-            SysCtlDelay(ui32SysClock / 12); /
+            SysCtlDelay(ui32SysClock / 12); 
             if(contador > 0) contador--;
             while(GPIOPinRead(GPIO_PORTJ_BASE, GPIO_PIN_1) == 0); 
         }

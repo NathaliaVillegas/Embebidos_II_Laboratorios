@@ -1,4 +1,4 @@
-gcc/ejercicio5.o: ejercicio5.c \
+gcc/Ejer_tiva1.o: Ejer_tiva1.c \
  /usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h \
  /usr/lib/gcc/arm-none-eabi/13.2.1/include/stdbool.h \
  /home/nath/Documentos/SDKs/Tiva/TivaWare/inc/hw_memmap.h \
