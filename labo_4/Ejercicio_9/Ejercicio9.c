@@ -25,8 +25,9 @@ __error__(char *pcFilename, uint32_t ui32Line)
 //*****************************************************************************
 // Global variables 
 
-uint32_t FS = 120000000 * 1;
+volatile uint32_t FS = 120000000 * 1;
 uint32_t counter = 1;
+int c = 1;
 
 void interrupcion1(void){
     
@@ -53,7 +54,17 @@ void interrupcion1(void){
     }
 }
 
+void botoncito(void){
+    GPIOIntClear(GPIO_PORTJ_BASE, GPIO_PIN_0);
 
+    FS = 120000000 * c;
+    c++;
+    if (c == 6){
+        c = 1;
+    }
+
+    TimerLoadSet(TIMER0_BASE, TIMER_A, FS);
+}
 
 int main(void)
 {
@@ -65,6 +76,8 @@ int main(void)
     //
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPION);
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOJ);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);
 
     // Check if the peripheral access is enabled.
     //
@@ -76,10 +89,15 @@ int main(void)
     {
     }
 
-    //Enable Timer Peripheral
+    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOJ))
+    {
+    }
 
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);
-    
+    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_TIMER0))
+    {
+    }
+
+    //Enable Timer Peripheral
 
     //Set Timmer
     TimerConfigure(TIMER0_BASE, TIMER_CFG_PERIODIC);
@@ -94,14 +112,18 @@ int main(void)
     //Enable the timer
     TimerEnable(TIMER0_BASE, TIMER_A);
 
-
-    // Enable the GPIO pin for the LED (PN0).  Set the direction as output, and
-    // enable the GPIO pin for digital function.
+    // Enable the GPIO pin for the LED
     //
     GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, GPIO_PIN_0);
     GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, GPIO_PIN_1);
     GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_4);
 
+    GPIOPinTypeGPIOInput(GPIO_PORTJ_BASE, GPIO_PIN_0);
+    GPIOPadConfigSet(GPIO_PORTJ_BASE, GPIO_PIN_0, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);
+
+    GPIOIntTypeSet(GPIO_PORTJ_BASE, GPIO_PIN_0, GPIO_FALLING_EDGE);
+    GPIOIntEnable(GPIO_PORTJ_BASE, GPIO_PIN_0);
+    IntEnable(INT_GPIOJ);
 
     //
     // Loop forever.
