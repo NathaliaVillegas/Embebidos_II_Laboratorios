@@ -42,8 +42,8 @@ static void IntDefaultHandler(void);
 //
 //*****************************************************************************
 extern int main(void);
-extern void interrupcion1(void);
-extern void botoncito(void);
+void Timer0A_Handler(void);
+
 //*****************************************************************************
 //
 // Reserve space for the system stack.
@@ -96,7 +96,7 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // ADC Sequence 2
     IntDefaultHandler,                      // ADC Sequence 3
     IntDefaultHandler,                      // Watchdog timer
-    interrupcion1,                      // Timer 0 subtimer A
+    Timer0A_Handler,                      // Timer 0 subtimer A
     IntDefaultHandler,                      // Timer 0 subtimer B
     IntDefaultHandler,                      // Timer 1 subtimer A
     IntDefaultHandler,                      // Timer 1 subtimer B
@@ -128,7 +128,7 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // ADC1 Sequence 2
     IntDefaultHandler,                      // ADC1 Sequence 3
     IntDefaultHandler,                      // External Bus Interface 0
-    botoncito,                      // GPIO Port J
+    IntDefaultHandler,                      // GPIO Port J
     IntDefaultHandler,                      // GPIO Port K
     IntDefaultHandler,                      // GPIO Port L
     IntDefaultHandler,                      // SSI2 Rx and Tx
