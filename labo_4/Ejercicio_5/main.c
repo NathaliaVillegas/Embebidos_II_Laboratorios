@@ -1,3 +1,4 @@
+#include "inc/hw_ints.h"
 #include <stdint.h>
 #include <stdbool.h>
 #include "inc/hw_memmap.h"
@@ -19,7 +20,6 @@ int main(void) {
     TimerConfigure(TIMER0_BASE, TIMER_CFG_PERIODIC); 
     TimerLoadSet(TIMER0_BASE, TIMER_A, FS);
 
-    upciones
     IntMasterEnable();                               
     IntEnable(INT_TIMER0A);                          
     TimerIntEnable(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
