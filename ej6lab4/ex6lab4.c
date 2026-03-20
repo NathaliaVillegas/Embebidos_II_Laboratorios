@@ -52,8 +52,6 @@ SYSCTL_PERIPH_GPIOF);
 
     GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, GPIO_PIN_0 | GPIO_PIN_1);
     GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_0 | GPIO_PIN_4);
-
-
     TimerConfigure(TIMER0_BASE, TIMER_CFG_PERIODIC);
 
     TimerLoadSet(TIMER0_BASE, TIMER_A, ui32SysClock * 2);
@@ -61,10 +59,8 @@ SYSCTL_PERIPH_GPIOF);
     TimerIntEnable(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
     IntEnable(INT_TIMER0A);
     IntMasterEnable();
-
     TimerEnable(TIMER0_BASE, TIMER_A);
 
     while(1)
-    {
-    }
+    {}
 }
