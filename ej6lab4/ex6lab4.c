@@ -18,17 +18,13 @@ void Timer0A_Handler(void)
 
     counter = (counter + 1) % 16;
 
-    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_1,
-                 (counter & 0x01) ? GPIO_PIN_1 : 0);
+    GPIOPinWrite(GPIO_PORTN_BASE, 0x02, (counter & 0x01) ? 0x02: 0);
 
-    GPIOPinWrite(GPIO_PORTN_BASE, GPIO_PIN_0,
-                 (counter & 0x02) ? GPIO_PIN_0 : 0);
+    GPIOPinWrite(GPIO_PORTN_BASE, 0x01, (counter & 0x02) ? 0x01: 0);
 
-    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4,
-                 (counter & 0x04) ? GPIO_PIN_4 : 0);
+    GPIOPinWrite(GPIO_PORTF_BASE, 0x50, (counter & 0x04) ? 0x50 : 0);
 
-    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0,
-                 (counter & 0x08) ? GPIO_PIN_0 : 0);
+    GPIOPinWrite(GPIO_PORTF_BASE, 0x01, (counter & 0x08) ? 0x01 : 0);
 }
 
 int main(void)
@@ -44,11 +40,19 @@ int main(void)
     while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPION));
     while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOF));
 
-    GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, GPIO_PIN_0 | GPIO_PIN_1);
-    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_0 | GPIO_PIN_4);
+    GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, 0x03);
+    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, 0x11);
 
     SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);
     while(!SysCtlPeripheralReady(SYSCTL_PERIPH_TIMER0));
+SYSCTL_PERIPH_GPIOF);
+
+    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPION));
+    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOF));
+
+    GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, GPIO_PIN_0 | GPIO_PIN_1);
+    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_0 | GPIO_PIN_4);
+
 
     TimerConfigure(TIMER0_BASE, TIMER_CFG_PERIODIC);
 
