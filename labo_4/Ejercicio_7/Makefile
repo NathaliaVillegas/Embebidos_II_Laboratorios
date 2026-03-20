@@ -6,13 +6,13 @@
 PART=TM4C1294NCPDT
 
 # Directorio base de TivaWare (sube 4 niveles desde boards/ek-tm4c1294xl/ejer6_tiva)
-ROOT=../../../..
+ROOT=/home/julian/TivaWarePath
 
 # Incluir definiciones comunes
 include ${ROOT}/makedefs
 
 # Rutas de headers
-IPATH=../../../..
+IPATH=/home/julian/TivaWarePath
 
 # Regla por defecto: construye el archivo .axf
 all: ${COMPILER}
