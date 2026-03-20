@@ -30,7 +30,7 @@ PART=TM4C1294NCPDT
 #
 # The base directory for TivaWare.
 #
-ROOT=../../../..
+ROOT=/home/nath/Documentos/SDKs/Tiva/TivaWare
 
 #
 # Include the common make definitions.
@@ -40,7 +40,7 @@ include ${ROOT}/makedefs
 #
 # Where to find header files that do not live in the source directory.
 #
-IPATH=../../../..
+IPATH=/home/nath/Documentos/SDKs/Tiva/TivaWare
 
 #
 # The default rule, which causes the blinky example to be built.
