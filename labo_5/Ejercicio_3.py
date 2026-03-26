@@ -12,8 +12,12 @@ def configuracion_pines():
 	pwm = GPIO.PWM(pin, 1000)
 	GPIO.setup(pin_adelante, GPIO.OUT)
 	GPIO.setup(pin_atras, GPIO.OUT)
+
+
 try: 
 	configuracion_pines();
+	GPIO.output(pin_adelante, GPIO.HIGH)
+	GPIO.output(pin_atras, GPIO.LOW)
 	while True:
 		pwm.ChangeDutyCycle(75)
 		time.sleep(5)
