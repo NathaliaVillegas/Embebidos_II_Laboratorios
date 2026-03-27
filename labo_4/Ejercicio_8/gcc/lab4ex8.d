@@ -1,4 +1,4 @@
-gcc/ex6lab4.o: ex6lab4.c \
+gcc/lab4ex8.o: lab4ex8.c \
  /usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h \
  /usr/lib/gcc/arm-none-eabi/13.2.1/include/stdbool.h \
  /home/nath/Documentos/SDKs/Tiva/TivaWare/inc/hw_memmap.h \

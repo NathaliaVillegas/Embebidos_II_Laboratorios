@@ -30,7 +30,7 @@ PART=TM4C1294NCPDT
 #
 # The base directory for TivaWare.
 #
-ROOT=../../../../..
+ROOT=/home/nath/Documentos/SDKs/Tiva/TivaWare
 
 #
 # Include the common make definitions.
@@ -40,13 +40,13 @@ include ${ROOT}/makedefs
 #
 # Where to find header files that do not live in the source directory.
 #
-IPATH=../../../../..
+IPATH=/home/nath/Documentos/SDKs/Tiva/TivaWare
 
 #
 # The default rule, which causes the blinky example to be built.
 #
 all: ${COMPILER}
-all: ${COMPILER}/lab4ex8.axf
+all: ${COMPILER}/main.axf
 
 #
 # The rule to clean out all the build products.
@@ -63,12 +63,12 @@ ${COMPILER}:
 #
 # Rules for building the blinky example.
 #
-${COMPILER}/lab4ex8.axf: ${COMPILER}/lab4ex8.o
-${COMPILER}/lab4ex8.axf: ${COMPILER}/startup_${COMPILER}.o
-${COMPILER}/lab4ex8.axf: ${ROOT}/driverlib/${COMPILER}/libdriver.a
-${COMPILER}/lab4ex8.axf: lab4ex8.ld
-SCATTERgcc_lab4ex8=lab4ex8.ld
-ENTRY_lab4ex8=ResetISR
+${COMPILER}/main.axf: ${COMPILER}/main.o
+${COMPILER}/main.axf: ${COMPILER}/startup_${COMPILER}.o
+${COMPILER}/main.axf: ${ROOT}/driverlib/${COMPILER}/libdriver.a
+${COMPILER}/main.axf: main.ld
+SCATTERgcc_main=main.ld
+ENTRY_main=ResetISR
 CFLAGSgcc=-DTARGET_IS_TM4C129_RA1
 
 #
