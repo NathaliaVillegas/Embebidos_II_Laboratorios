@@ -2,7 +2,6 @@ Repositorio de laboratorios
 Github - Embebidos_II_Laboratorios
 
 Placas de desarrollo utilizadas:
-#Raspberry pi 4
 #Raspberry pi 5
 #Tiva TM4C1296
 
@@ -15,6 +14,6 @@ Integrantes:
 #Nathalia Belen Villegas Loza
 #Julian C. Gutierrez
 
-Last update: 05/03/2026
+Last update: 29/03/2026
 
 ###################################
