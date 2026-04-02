@@ -43,8 +43,6 @@ void Delay(float time){
 //*****************************************************************************
 // Global variables 
 
-// *********************** CAMBIO 1 *********************************
-// Cambiamos a UART3 (aunque no usamos interrupciones)
 void UART3_Handler(void)
 {
     // VACÍO
@@ -54,10 +52,7 @@ void UART3_Handler(void)
 int main(void)
 {
     SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ | SYSCTL_OSC_MAIN | SYSCTL_USE_PLL | SYSCTL_CFG_VCO_480), 120000000);
-    
-    // *********************** CAMBIO 2 *********************************
-    // ANTES UART0 + GPIOA
-    // AHORA UART3 + GPIOA  <-- CORREGIDO (era GPIOC)
+
     SysCtlPeripheralEnable(SYSCTL_PERIPH_UART3);
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
     // ******************************************************************
@@ -70,7 +65,7 @@ int main(void)
     GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_4 | GPIO_PIN_5);
     // ******************************************************************
 
-    // *********************** CAMBIO 4 *********************************
+
     // Configurar UART3 manualmente (9600 8N1)
     UARTConfigSetExpClk(UART3_BASE, 120000000, 9600, (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
     // ******************************************************************
@@ -120,8 +115,7 @@ int main(void)
             GPIOPinWrite(GPIO_PORTN_BASE, 0x01, 0x00);
         }
 
-        // *********************** CAMBIO 6 *********************************
-        // BOTÓN PJ1 → LED + UART3
+
         if(currentPJ1 == 0)
         {
             GPIOPinWrite(GPIO_PORTN_BASE, 0x02, 0x02);
