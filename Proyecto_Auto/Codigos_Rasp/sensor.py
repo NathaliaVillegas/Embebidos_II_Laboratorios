@@ -52,6 +52,7 @@ def motor1_on():
     pwm1.ChangeDutyCycle(30)
     pwm2.ChangeDutyCycle(0)
 
+
 def motor2_on():
     print("Motor 2 ON")
     GPIO.output(pin_adelante2, GPIO.HIGH)
@@ -59,17 +60,19 @@ def motor2_on():
     pwm2.ChangeDutyCycle(30)
     pwm1.ChangeDutyCycle(0)
 
+
 def stop_motors():
     print("Motores OFF")
     pwm1.ChangeDutyCycle(0)
     pwm2.ChangeDutyCycle(0)
+
 
 # ================= LOOP PRINCIPAL =================
 
 try:
     while True:
         if ser.in_waiting > 0:
-            mensaje = ser.readline().decode('utf-8').strip()
+            mensaje = ser.readline().decode('utf-8', errors='ignore').strip()
             print("Recibido:", mensaje)
 
             if mensaje == "motor1":
@@ -77,6 +80,22 @@ try:
 
             elif mensaje == "motor2":
                 motor2_on()
+
+            elif mensaje.replace('.', '', 1).isdigit():
+                distancia = float(mensaje)
+                print("Distancia:", distancia)
+
+                if distancia < 4:
+                    stop_motors()
+                else:
+                    GPIO.output(pin_adelante1, GPIO.HIGH)
+                    GPIO.output(pin_atras1, GPIO.LOW)
+
+                    GPIO.output(pin_adelante2, GPIO.HIGH)
+                    GPIO.output(pin_atras2, GPIO.LOW)
+
+                    pwm1.ChangeDutyCycle(50)
+                    pwm2.ChangeDutyCycle(50)
 
             else:
                 stop_motors()
