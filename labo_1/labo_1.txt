@@ -1,0 +1,28 @@
+Porque trabajamos en Ubuntu:
+- Es un punto medio entre un CLI y un OS 
+- Es de software libre - còdigo abierto 
+
+Desventajas:
+- Es poco intutitivo
+- Necesitas conlocimiento para usarlo es demasiado libre
+
+
+WSL: Windowns Subsystem for Linux
+Te permite usar la terminal de Linux en windowns 
+
+Diferencia entre doble booteo y virtual machine:
+
+Virtual machine - Es una simulacion de linux, solo usa el espacio/recursos que le asignas
+Boot - el sistema operativo principal es linux, trabaja con el 100% de su poder, pero particiona el disco duro
+
+Linea de comandos:
+- pwd
+- cd: 
+- cat
+- tree (se debe instalar)
+- mkdir 
+- sudo: nos da permisos de super usuario 
+- chmod: te permite cambiar permisos de r,w,e
+- rm (archivo), rm -r (directorio)
+- ls, ls -l
+- sudo su (switch user a sudo-superusuario)

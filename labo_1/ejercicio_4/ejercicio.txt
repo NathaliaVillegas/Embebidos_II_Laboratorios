@@ -1,0 +1,321 @@
+nath@nath-Victus:~/Documentos/Universidad/Embebidos II/Labo 1$ sudo adduser Company 
+[sudo] contraseña para nath: 
+err: Please enter a username matching the regular expression
+            configured via the NAME_REGEX configuration variable.  Use the
+            `--allow-bad-names' option to relax this check or reconfigure
+            NAME_REGEX in configuration.
+nath@nath-Victus:~/Documentos/Universidad/Embebidos II/Labo 1$ sudo adduser Company
+err: Please enter a username matching the regular expression
+            configured via the NAME_REGEX configuration variable.  Use the
+            `--allow-bad-names' option to relax this check or reconfigure
+            NAME_REGEX in configuration.
+nath@nath-Victus:~/Documentos/Universidad/Embebidos II/Labo 1$ sudo adduser company
+info: Añadiendo el usuario `company' ...
+info: Selecting UID/GID from range 1000 to 59999 ...
+info: Añadiendo el nuevo grupo `company' (1001) ...
+info: Adding new user `company' (1001) with group `company (1001)' ...
+info: Creando el directorio personal `/home/company' ...
+info: Copiando los ficheros desde `/etc/skel' ...
+Nueva contraseña: 
+CONTRASEÑA INCORRECTA: La contraseña tiene menos de 8 caracteres
+Vuelva a escribir la nueva contraseña: 
+Las contraseñas no coinciden.
+Nueva contraseña: 
+CONTRASEÑA INCORRECTA: De alguna manera, en la contraseña se lee el nombre del usuario
+Vuelva a escribir la nueva contraseña: 
+Las contraseñas no coinciden.
+Nueva contraseña: 
+CONTRASEÑA INCORRECTA: La contraseña no supera la verificación de diccionario - Está basada en una palabra del diccionario.
+Vuelva a escribir la nueva contraseña: 
+Las contraseñas no coinciden.
+passwd: Se ha agotado el número máximo de reintentos para el servicio
+passwd: no se ha cambiado la contraseña
+¿Intentar de nuevo? [s/N] s
+Nueva contraseña: 
+CONTRASEÑA INCORRECTA: La contraseña no supera la verificación de diccionario - Es demasiado simple/sistemática.
+Vuelva a escribir la nueva contraseña: 
+passwd: contraseña actualizada correctamente
+Cambiando la información de usuario para company
+Introduzca el nuevo valor, o presione INTRO para el predeterminado
+	Nombre completo []: company
+	Número de habitación []: 
+	Teléfono del trabajo []: 
+	Teléfono de casa []: 
+	Otro []: 
+¿Es correcta la información? [S/n] s
+info: Adding new user `company' to supplemental / extra groups `users' ...
+info: Añadiendo al usuario `company' al grupo `users' ...
+nath@nath-Victus:~/Documentos/Universidad/Embebidos II/Labo 1$ sudo usermod -aG sudo Company
+usermod: el usuario «Company» no existe
+nath@nath-Victus:~/Documentos/Universidad/Embebidos II/Labo 1$ sudo usermod -aG sudo company
+nath@nath-Victus:~/Documentos/Universidad/Embebidos II/Labo 1$ users
+nath nath
+nath@nath-Victus:~/Documentos/Universidad/Embebidos II/Labo 1$ user
+Orden «user» no encontrada. Quizá quiso decir:
+  la orden «userv» del paquete deb «userv (1.2.1~beta4)»
+  la orden «fuser» del paquete deb «psmisc (23.6-1)»
+  la orden «users» del paquete deb «coreutils (9.4-3ubuntu6.1)»
+  la orden «iuser» del paquete deb «ipmiutil (3.1.9-3)»
+Pruebe con: sudo apt install <nombre del paquete deb>
+nath@nath-Victus:~/Documentos/Universidad/Embebidos II/Labo 1$ sudo adduser engineer
+info: Añadiendo el usuario `engineer' ...
+info: Selecting UID/GID from range 1000 to 59999 ...
+info: Añadiendo el nuevo grupo `engineer' (1002) ...
+info: Adding new user `engineer' (1002) with group `engineer (1002)' ...
+info: Creando el directorio personal `/home/engineer' ...
+info: Copiando los ficheros desde `/etc/skel' ...
+Nueva contraseña: 
+CONTRASEÑA INCORRECTA: La contraseña no supera la verificación de diccionario - Es demasiado simple/sistemática.
+Vuelva a escribir la nueva contraseña: 
+passwd: contraseña actualizada correctamente
+Cambiando la información de usuario para engineer
+Introduzca el nuevo valor, o presione INTRO para el predeterminado
+	Nombre completo []: engineer
+	Número de habitación []: 
+	Teléfono del trabajo []: 
+	Teléfono de casa []: 
+	Otro []: 
+¿Es correcta la información? [S/n] s
+info: Adding new user `engineer' to supplemental / extra groups `users' ...
+info: Añadiendo al usuario `engineer' al grupo `users' ...
+nath@nath-Victus:~/Documentos/Universidad/Embebidos II/Labo 1$ sudo adduser Operator
+err: Please enter a username matching the regular expression
+            configured via the NAME_REGEX configuration variable.  Use the
+            `--allow-bad-names' option to relax this check or reconfigure
+            NAME_REGEX in configuration.
+nath@nath-Victus:~/Documentos/Universidad/Embebidos II/Labo 1$ sudo adduser operator
+fatal: El grupo `operator' ya existe.
+nath@nath-Victus:~/Documentos/Universidad/Embebidos II/Labo 1$ sudo adduser operator_ej1
+info: Añadiendo el usuario `operator_ej1' ...
+info: Selecting UID/GID from range 1000 to 59999 ...
+info: Añadiendo el nuevo grupo `operator_ej1' (1003) ...
+info: Adding new user `operator_ej1' (1003) with group `operator_ej1 (1003)' ...
+info: Creando el directorio personal `/home/operator_ej1' ...
+info: Copiando los ficheros desde `/etc/skel' ...
+Nueva contraseña: 
+CONTRASEÑA INCORRECTA: La contraseña no supera la verificación de diccionario - Es demasiado simple/sistemática.
+Vuelva a escribir la nueva contraseña: 
+passwd: contraseña actualizada correctamente
+Cambiando la información de usuario para operator_ej1
+Introduzca el nuevo valor, o presione INTRO para el predeterminado
+	Nombre completo []: operator
+	Número de habitación []: 
+	Teléfono del trabajo []: 
+	Teléfono de casa []: 
+	Otro []: 
+¿Es correcta la información? [S/n] s
+info: Adding new user `operator_ej1' to supplemental / extra groups `users' ...
+info: Añadiendo al usuario `operator_ej1' al grupo `users' ...
+nath@nath-Victus:~/Documentos/Universidad/Embebidos II/Labo 1$ sudo groupadd Distribution
+nath@nath-Victus:~/Documentos/Universidad/Embebidos II/Labo 1$ sudo usermod -aG Distribution company
+nath@nath-Victus:~/Documentos/Universidad/Embebidos II/Labo 1$ sudo usermod -aG Distribution engineer
+nath@nath-Victus:~/Documentos/Universidad/Embebidos II/Labo 1$ sudo usermod -aG Distribution distribution_ej1
+usermod: el usuario «distribution_ej1» no existe
+nath@nath-Victus:~/Documentos/Universidad/Embebidos II/Labo 1$ sudo usermod -aG Distribution operator_ej1
+nath@nath-Victus:~/Documentos/Universidad/Embebidos II/Labo 1$ groups
+nath adm dialout cdrom sudo dip plugdev users lpadmin
+nath@nath-Victus:~/Documentos/Universidad/Embebidos II/Labo 1$ group
+Orden «group» no encontrada. Quizá quiso decir:
+  la orden «groups» del paquete deb «coreutils (9.4-3ubuntu6.1)»
+  la orden «grop» del paquete deb «grop (2:0.10-1.2)»
+Pruebe con: sudo apt install <nombre del paquete deb>
+nath@nath-Victus:~/Documentos/Universidad/Embebidos II/Labo 1$ groups Company
+groups Engineer
+groups Operator
+groups: «Company»: no existe ese usuario
+groups: «Engineer»: no existe ese usuario
+groups: «Operator»: no existe ese usuario
+nath@nath-Victus:~/Documentos/Universidad/Embebidos II/Labo 1$ groups company
+company : company sudo users Distribution
+nath@nath-Victus:~/Documentos/Universidad/Embebidos II/Labo 1$ groups operator_ej1
+operator_ej1 : operator_ej1 users Distribution
+nath@nath-Victus:~/Documentos/Universidad/Embebidos II/Labo 1$ groups engineer
+engineer : engineer users Distribution
+nath@nath-Victus:~/Documentos/Universidad/Embebidos II/Labo 1$ su - company
+Contraseña: 
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+company@nath-Victus:~$ ls
+company@nath-Victus:~$ tree
+.
+
+0 directories, 0 files
+company@nath-Victus:~$ mkdir 'Designed tasks"'
+company@nath-Victus:~$ ls
+'Designed tasks"'
+company@nath-Victus:~$ rm '
+.bash_logout     .bashrc          Designed tasks"/ .profile         
+company@nath-Victus:~$ rm 'Designed tasks"'/
+rm: no se puede borrar 'Designed tasks"/': Es un directorio
+company@nath-Victus:~$ rm -r 'Designed tasks"'/
+company@nath-Victus:~$ ls
+company@nath-Victus:~$ mkdir 'Designed tasks'
+company@nath-Victus:~$ ls
+'Designed tasks'
+company@nath-Victus:~$ mkdir 'Designed tasks'/Maintenance
+company@nath-Victus:~$ mkdir 'Designed tasks'/'Production line'
+company@nath-Victus:~$ mkdir 'Designed tasks'/Fixes
+company@nath-Victus:~$ mkdir 'Designed tasks'/Costs
+company@nath-Victus:~$ tree
+.
+└── Designed tasks
+    ├── Costs
+    ├── Fixes
+    ├── Maintenance
+    └── Production line
+
+6 directories, 0 files
+company@nath-Victus:~$ cat > 'Designed tasks/Maintenance/dates'
+Maintenance team – Wednesday 08:00-12:00
+company@nath-Victus:~$ tree
+.
+└── Designed tasks
+    ├── Costs
+    ├── Fixes
+    ├── Maintenance
+    │   └── dates
+    └── Production line
+
+6 directories, 1 file
+company@nath-Victus:~$ cat > 'Designed tasks/Costs/dates' 
+Costs team - last day of the month                                                      
+company@nath-Victus:~$ cat > 'Designed tasks/Production Line/dates'
+-bash: Designed tasks/Production Line/dates: No existe el archivo o el directorio
+company@nath-Victus:~$ cat > 'Designed tasks/Production line/dates'
+Production team – Monday to Friday 07:00-16:00
+company@nath-Victus:~$ cat > 'Designed tasks/Fixes/dates'
+Fix team – If id needed
+company@nath-Victus:~$ tree
+.
+└── Designed tasks
+    ├── Costs
+    │   └── dates
+    ├── Fixes
+    │   └── dates
+    ├── Maintenance
+    │   └── dates
+    └── Production line
+        └── dates
+
+6 directories, 4 files
+company@nath-Victus:~$ cat > 'Designed tasks/Products'
+Atun 
+Maiz enlatado    
+Duraznos enlatados 
+company@nath-Victus:~$ cat >> 'Designed tasks/Maintenance/dates'
+Maintenance - Friday
+company@nath-Victus:~$ 
+company@nath-Victus:~$ cat >> 'Designed tasks/Production Line/dates'
+-bash: Designed tasks/Production Line/dates: No existe el archivo o el directorio
+company@nath-Victus:~$ cat >> 'Designed tasks/Production line/dates'
+Production line – Monday to Thursday
+company@nath-Victus:~$ cat >> 'Designed tasks/Fixes/dates'
+Fixes – with 2 days of anticipation
+company@nath-Victus:~$ cat >> 'Designed tasks/Costs/dates'
+Costs – at the end of the month
+company@nath-Victus:~$ cat >> 'Designed tasks/Fixes/dates'
+company@nath-Victus:~$ cat 'Designed tasks/Maintenance/dates'
+Maintenance team – Wednesday 08:00-12:00
+Maintenance - Friday
+company@nath-Victus:~$ cat 'Designed tasks/Production line/dates'
+Production team – Monday to Friday 07:00-16:00
+Production line – Monday to Thursday
+company@nath-Victus:~$ cat 'Designed tasks/Fixes/dates'
+Fix team – If id needed
+Fixes – with 2 days of anticipation
+company@nath-Victus:~$ gedit 'Designed tasks/Fixes/dates'
+
+(gedit:4871): Gtk-WARNING **: 15:33:43.764: cannot open display: 
+company@nath-Victus:~$ gedit 'Designed tasks/Fixes/dates.txt'
+
+(gedit:4875): Gtk-WARNING **: 15:33:54.720: cannot open display: 
+company@nath-Victus:~$ tree
+.
+└── Designed tasks
+    ├── Costs
+    │   └── dates
+    ├── Fixes
+    │   └── dates
+    ├── Maintenance
+    │   └── dates
+    ├── Production line
+    │   └── dates
+    └── Products
+
+6 directories, 5 files
+company@nath-Victus:~$ nano 'Designed tasks/Fixes/dates'
+company@nath-Victus:~$ cat 'Designed tasks/Fixes/dates'
+Fix team – If is needed
+Fixes – with 2 days of anticipation
+company@nath-Victus:~$ cat > 'Designed tasks/Costs/dates' 
+company@nath-Victus:~$ cat 'Designed tasks/Costs/dates' 
+company@nath-Victus:~$ cat 'Designed tasks/Costs/dates' 
+company@nath-Victus:~$ cat > 'Designed tasks/Costs/dates' 
+Costs team - 15:00 - 16:00          
+company@nath-Victus:~$ cat >^CDesigned tasks/Costs/dates' 
+company@nath-Victus:~$ cat >> 'Designed tasks/Costs/dates' 
+Costs – at the end of the month
+company@nath-Victus:~$ cat 'Designed tasks/Costs/dates' 
+Costs team - 15:00 - 16:00
+Costs – at the end of the month
+company@nath-Victus:~$ sudo adduser supervisor
+[sudo] contraseña para company: 
+info: Añadiendo el usuario `supervisor' ...
+info: Selecting UID/GID from range 1000 to 59999 ...
+info: Añadiendo el nuevo grupo `supervisor' (1005) ...
+info: Adding new user `supervisor' (1005) with group `supervisor (1005)' ...
+info: Creando el directorio personal `/home/supervisor' ...
+info: Copiando los ficheros desde `/etc/skel' ...
+Nueva contraseña: 
+CONTRASEÑA INCORRECTA: La contraseña no supera la verificación de diccionario - Es demasiado simple/sistemática.
+Vuelva a escribir la nueva contraseña: 
+Las contraseñas no coinciden.
+Nueva contraseña: 
+CONTRASEÑA INCORRECTA: La contraseña no supera la verificación de diccionario - Es demasiado simple/sistemática.
+Vuelva a escribir la nueva contraseña: 
+passwd: contraseña actualizada correctamente
+Cambiando la información de usuario para supervisor
+Introduzca el nuevo valor, o presione INTRO para el predeterminado
+	Nombre completo []: Supervisor
+	Número de habitación []: 
+	Teléfono del trabajo []: 
+	Teléfono de casa []: 
+	Otro []: 
+¿Es correcta la información? [S/n] s
+info: Adding new user `supervisor' to supplemental / extra groups `users' ...
+info: Añadiendo al usuario `supervisor' al grupo `users' ...
+company@nath-Victus:~$ sudo usermod -aG Distribution supervisor
+company@nath-Victus:~$ supervisor groups
+Orden «supervisor» no encontrada. Quizá quiso decir:
+  la orden «supervisord» del paquete deb «supervisor (4.2.5-1ubuntu0.1)»
+Pruebe con: sudo apt install <nombre del paquete deb>
+company@nath-Victus:~$ supervisor group
+Orden «supervisor» no encontrada. Quizá quiso decir:
+  la orden «supervisord» del paquete deb «supervisor (4.2.5-1ubuntu0.1)»
+Pruebe con: sudo apt install <nombre del paquete deb>
+company@nath-Victus:~$ groups supervisor
+supervisor : supervisor users Distribution
+company@nath-Victus:~$ sudo chown -R supervisor 'Designed tasks'/
+company@nath-Victus:~$ ls-l
+ls-l: no se encontró la orden
+company@nath-Victus:~$ ls -l
+total 4
+drwxrwxr-x 6 supervisor company 4096 feb 26 15:29 'Designed tasks'
+company@nath-Victus:~$ ls -l Designed\ tasks/Maintenance/
+total 4
+-rw-rw-r-- 1 supervisor company 64 feb 26 15:30 dates
+company@nath-Victus:~$ sudo chgrp -R Distribution 'Designed tasks'/
+company@nath-Victus:~$ ls -l
+total 4
+drwxrwxr-x 6 supervisor Distribution 4096 feb 26 15:29 'Designed tasks'
+company@nath-Victus:~$ sudo chown -R 770 'Designed tasks'/
+company@nath-Victus:~$ ls -l
+total 4
+drwxrwxr-x 6 770 Distribution 4096 feb 26 15:29 'Designed tasks'
+company@nath-Victus:~$ sudo chown -R supervisor 'Designed tasks'/
+company@nath-Victus:~$ sudo chmod -R 770 'Designed tasks'/
+company@nath-Victus:~$ ls -l
+total 4
+drwxrwx--- 6 supervisor Distribution 4096 feb 26 15:29 'Designed tasks'
+company@nath-Victus:~$ exit

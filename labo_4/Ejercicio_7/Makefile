@@ -6,26 +6,17 @@
 PART=TM4C1294NCPDT
 
 # Directorio base de TivaWare (sube 4 niveles desde boards/ek-tm4c1294xl/ejer6_tiva)
-<<<<<<< HEAD
-ROOT=/home/julian/TivaWarePath
-=======
 ROOT=/home/nath/Documentos/SDKs/Tiva/TivaWare
->>>>>>> 540fde2f08f72bc572cfce9377858dde2db50fd2
 
 #
 # Include the common make definitions.
 #
 include ${ROOT}/makedefs
 
-<<<<<<< HEAD
-# Rutas de headers
-IPATH=/home/julian/TivaWarePath
-=======
 #
 # Where to find header files that do not live in the source directory.
 #
 IPATH=/home/nath/Documentos/SDKs/Tiva/TivaWare
->>>>>>> 540fde2f08f72bc572cfce9377858dde2db50fd2
 
 # Regla por defecto: construye el archivo .axf
 all: ${COMPILER}

@@ -1,0 +1,26 @@
+#,Command,Use
+1,ls,List files and directories
+2,ls -l,List files and directories in long format
+3,cd,Change directory
+4,pwd,Print working directory
+5,sudo,Execute a command as superuser
+6,sudo su,Switch to root user
+7,mkdir,Create a new directory
+8,touch,Create an empty file
+9,sudo apt update,Update package list
+10,sudo apt upgrade,Upgrade installed packages
+11,sudo apt install,Install a package
+12,tree,Show directory tree
+13,rm,Remove a file
+14,rm -r,Remove directory recursively
+15,mv,Move or rename files
+16,cp,Copy files and directories
+17,chown,Change file ownership
+18,chmod,Change file permissions
+19,adduser,Add a new user
+20,usermod,Modify a user
+21,gpasswd,Manage group memberships
+22,cat/nano/gedit,Edit text files
+23,grep,Search text patterns
+24,find,Search files and directories
+25,history,Show command history
