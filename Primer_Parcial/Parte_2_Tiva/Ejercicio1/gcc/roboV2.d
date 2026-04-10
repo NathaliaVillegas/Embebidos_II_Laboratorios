@@ -10,7 +10,10 @@ gcc/roboV2.o: roboV2.c /usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h \
  /usr/include/newlib/machine/_default_types.h \
  /usr/include/newlib/sys/_types.h /usr/include/newlib/machine/_types.h \
  /usr/include/newlib/sys/lock.h /usr/include/newlib/sys/string.h \
- ../../../../../inc/hw_memmap.h ../../../../../driverlib/sysctl.h \
- ../../../../../driverlib/gpio.h ../../../../../driverlib/pin_map.h \
- ../../../../../driverlib/uart.h ../../../../../driverlib/timer.h \
- ../../../../../driverlib/pwm.h
+ /home/nath/Documentos/SDKs/Tiva/TivaWare/inc/hw_memmap.h \
+ /home/nath/Documentos/SDKs/Tiva/TivaWare/driverlib/sysctl.h \
+ /home/nath/Documentos/SDKs/Tiva/TivaWare/driverlib/gpio.h \
+ /home/nath/Documentos/SDKs/Tiva/TivaWare/driverlib/pin_map.h \
+ /home/nath/Documentos/SDKs/Tiva/TivaWare/driverlib/uart.h \
+ /home/nath/Documentos/SDKs/Tiva/TivaWare/driverlib/timer.h \
+ /home/nath/Documentos/SDKs/Tiva/TivaWare/driverlib/pwm.h
