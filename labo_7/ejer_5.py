@@ -3,7 +3,6 @@ import os
 import numpy as np
 
 def convertir_a_gris(imagen_bgr):
-    """Función para convertir RGB (BGR) a escala de grises [cite: 92]"""
     return cv2.cvtColor(imagen_bgr, cv2.COLOR_BGR2GRAY)
 
 def main():
@@ -13,7 +12,7 @@ def main():
         print("No hay imágenes en la carpeta 'colors'.")
         return
 
-    for nombre in imagenes[:3]:
+    for nombre in imagenes:
         ruta = os.path.join('colors', nombre)
         img = cv2.imread(ruta) 
         

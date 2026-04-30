@@ -10,18 +10,15 @@ class ImageColorManager:
             self.valid = True
 
     def show_rgb(self):
-        """Muestra la imagen en su formato original (BGR en OpenCV)"""
         if self.valid:
             cv2.imshow("Imagen Original (RGB/BGR)", self.original)
 
     def show_grayscale(self):
-        """Convierte y muestra la imagen en escala de grises"""
         if self.valid:
             gray = cv2.cvtColor(self.original, cv2.COLOR_BGR2GRAY)
             cv2.imshow("Imagen en Grayscale", gray)
 
     def show_hsv(self):
-        """Convierte y muestra la imagen en el espacio de color HSV"""
         if self.valid:
             hsv = cv2.cvtColor(self.original, cv2.COLOR_BGR2HSV)
             cv2.imshow("Imagen en HSV", hsv)
@@ -36,7 +33,5 @@ if __name__ == "__main__":
         processor.show_grayscale()
         processor.show_hsv()
         
-        print("--- Proceso Completado ---")
-        print("Presiona cualquier tecla en una de las ventanas para cerrar.")
         cv2.waitKey(0)
         cv2.destroyAllWindows()
