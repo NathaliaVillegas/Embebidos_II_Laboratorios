@@ -4,9 +4,9 @@ import serial
 import time
 
 class DetectorObjetos:
-    def __init__(self, port='/dev/ttyS0', baud=115200):
+    def __init__(self, port='/dev/ttyAMA0', baud=9600):
         try:
-            self.ser = serial.Serial(port, baudrate=baud, timeout=1)
+            self.ser = serial.Serial(port = '/dev/ttyAMA0', baudrate=9600, timeout=1)
             print(f"UART conectada en {port}")
         except Exception as e:
             print(f"Error al conectar UART: {e}")
@@ -22,10 +22,13 @@ class DetectorObjetos:
         if self.ser and self.ser.is_open:
             if conteo == 1:
                 self.ser.write(b'1') 
+                print("1")
             elif conteo > 1:
-                self.ser.write(b'M') 
+                self.ser.write(b'2') 
+                print("2")
             else:
                 self.ser.write(b'0') 
+                print("0")
 
     def procesar(self):
         print("Iniciando detección. Presiona 'Esc' para salir.")

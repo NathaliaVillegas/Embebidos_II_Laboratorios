@@ -1,70 +1,70 @@
 import cv2
 import numpy as np
-from abc import ABC, abstractmethod
+import RPi.GPIO as GPIO
+import time
 
-class video_Capture_abs(ABC):
-    @abstractmethod
-    def camera_visualization(self):
-        pass
+MOTOR_PIN = 18
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(MOTOR_PIN, GPIO.OUT)
+pwm = GPIO.PWM(MOTOR_PIN, 100)
+pwm.start(0)
 
-class ColorDetector(video_Capture_abs):
-    def __init__(self):
-        self.colores = {
-            "Rojo": [
-                (np.array([0, 70, 50]), np.array([15, 255, 255])),
-                (np.array([165, 70, 50]), np.array([180, 255, 255]))
-            ],
-            "Verde": [(np.array([35, 40, 40]), np.array([90, 255, 255]))],
-            "Azul": [(np.array([90, 40, 40]), np.array([130, 255, 255]))]
-        }
-        self.kernel = np.ones((5,5), np.uint8)
+def main():
+    cap = cv2.VideoCapture(0)
+    
 
-    def procesar_y_dibujar(self, frame, hsv, nombre, rangos, color_bgr):
-        mask = cv2.inRange(hsv, rangos[0][0], rangos[0][1])
-        if len(rangos) > 1:
-            mask2 = cv2.inRange(hsv, rangos[1][0], rangos[1][1])
-            mask = cv2.bitwise_or(mask, mask2)
-        mask = cv2.dilate(mask, self.kernel, iterations=1)
+    rojo = ([0, 150, 50], [10, 255, 255])
+    amarillo = ([20, 100, 100], [35, 255, 255])
+    verde = ([40, 100, 100], [80, 255, 255])
+
+    ultimo_estado = ""
+    contador_confirmacion = 0
+
+    print("Sistema iniciado. Analizando semáforo de la TIVA...")
+    cv2.namedWindow("Monitor de Semáforo",cv2.WINDOW_AUTOSIZE)
+    while True:
+        ret, frame = cap.read()
+        if not ret: break
+
+        frame = cv2.resize(frame, (400, 300))
+        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+
+        m_r = cv2.inRange(hsv, np.array(rojo[0]), np.array(rojo[1]))
+        m_a = cv2.inRange(hsv, np.array(amarillo[0]), np.array(amarillo[1]))
+        m_v = cv2.inRange(hsv, np.array(verde[0]), np.array(verde[1]))
+
+        conteos = {"ROJO": cv2.countNonZero(m_r), 
+                   "AMARILLO": cv2.countNonZero(m_a), 
+                   "VERDE": cv2.countNonZero(m_v)}
         
-        contornos, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        estado_actual = max(conteos, key=conteos.get)
         
-        ar = []
-        for cnt in contornos:
-            ar.append(cv2.contourArea(cnt))
-        
-        if len(ar) > 0:
-            maxi = max(ar)
-            if maxi > 300: 
-                for cnt in contornos:
-                    if cv2.contourArea(cnt) == maxi:
-                        x, y, w, h = cv2.boundingRect(cnt)
-                        cv2.rectangle(frame, (x, y), (x+w, y+h), color_bgr, 2)
-                        cv2.putText(frame, f"{nombre}", (x, y-10), 
-                                    cv2.FONT_HERSHEY_SIMPLEX, 0.6, color_bgr, 2)
+        if conteos[estado_actual] < 1000:
+            estado_actual = "APAGADO"
 
-    def camera_visualization(self):
-        cap = cv2.VideoCapture(0)
-        cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-        cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+        if estado_actual == ultimo_estado:
+            contador_confirmacion += 1
+        else:
+            contador_confirmacion = 0
+            ultimo_estado = estado_actual
 
-        while True:
-            ret, frame = cap.read()
-            if not ret: break
-
-            hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        if contador_confirmacion == 5:
+            if estado_actual == "VERDE":
+                pwm.ChangeDutyCycle(100)
+            elif estado_actual == "AMARILLO":
+                pwm.ChangeDutyCycle(25)  
+            elif estado_actual == "ROJO":
+                pwm.ChangeDutyCycle(0) 
             
-            self.procesar_y_dibujar(frame, hsv, "Rojo", self.colores["Rojo"], (0, 0, 255))
-            self.procesar_y_dibujar(frame, hsv, "Verde", self.colores["Verde"], (0, 255, 0))
-            self.procesar_y_dibujar(frame, hsv, "Azul", self.colores["Azul"], (255, 0, 0))
+            print(f"Estado Semáforo Detectado: {estado_actual}")
 
-            cv2.imshow("Webcam Pico - RGB Detector", frame)
+        cv2.imshow("Monitor de Semáforo", frame)
+        if cv2.waitKey(1) == 27: break
 
-            if cv2.waitKey(1) & 0xFF == 27:
-                break
-
-        cap.release()
-        cv2.destroyAllWindows()
+    cap.release()
+    pwm.stop()
+    GPIO.cleanup()
+    cv2.destroyAllWindows()
 
 if __name__ == "__main__":
-    detector = ColorDetector()
-    detector.camera_visualization()
+    main()
