@@ -2,69 +2,162 @@ import cv2
 import numpy as np
 import RPi.GPIO as GPIO
 import time
+import threading
 
-MOTOR_PIN = 18
 GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+
+# =========================
+# CONFIG MOTOR
+# =========================
+MOTOR_PIN = 18
+
 GPIO.setup(MOTOR_PIN, GPIO.OUT)
+
 pwm = GPIO.PWM(MOTOR_PIN, 100)
 pwm.start(0)
 
-def main():
-    cap = cv2.VideoCapture(0)
-    
+# =========================
+# VARIABLES GLOBALES
+# =========================
+frame = None
+lock = threading.Lock()
+running = True
 
-    rojo = ([0, 150, 50], [10, 255, 255])
-    amarillo = ([20, 100, 100], [35, 255, 255])
-    verde = ([40, 100, 100], [80, 255, 255])
+# =========================
+# HILO 1: CAPTURA
+# =========================
+def capture_thread():
+    global frame, running
 
-    ultimo_estado = ""
-    contador_confirmacion = 0
+    cap = cv2.VideoCapture(0, cv2.CAP_V4L2)
 
-    print("Sistema iniciado. Analizando semáforo de la TIVA...")
+    if not cap.isOpened():
+        print("❌ ERROR: No se pudo abrir la cámara")
+        running = False
+        return
 
-    while True:
-        ret, frame = cap.read()
-        if not ret: break
+    print("✅ Cámara iniciada correctamente")
 
-        frame = cv2.resize(frame, (400, 300))
-        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    while running:
+        ret, img = cap.read()
+        if not ret:
+            continue
 
-        m_r = cv2.inRange(hsv, np.array(rojo[0]), np.array(rojo[1]))
-        m_a = cv2.inRange(hsv, np.array(amarillo[0]), np.array(amarillo[1]))
-        m_v = cv2.inRange(hsv, np.array(verde[0]), np.array(verde[1]))
+        img = cv2.resize(img, (400, 300))
 
-        conteos = {"ROJO": cv2.countNonZero(m_r), 
-                   "AMARILLO": cv2.countNonZero(m_a), 
-                   "VERDE": cv2.countNonZero(m_v)}
-        
-        estado_actual = max(conteos, key=conteos.get)
-        
-        if conteos[estado_actual] < 1000:
-            estado_actual = "APAGADO"
-
-        if estado_actual == ultimo_estado:
-            contador_confirmacion += 1
-        else:
-            contador_confirmacion = 0
-            ultimo_estado = estado_actual
-
-        if contador_confirmacion == 5:
-            if estado_actual == "VERDE":
-                pwm.ChangeDutyCycle(100)
-            elif estado_actual == "AMARILLO":
-                pwm.ChangeDutyCycle(25)  
-            elif estado_actual == "ROJO":
-                pwm.ChangeDutyCycle(0) 
-            
-            print(f"Estado Semáforo Detectado: {estado_actual}")
-
-        cv2.imshow("Monitor de Semáforo", frame)
-        if cv2.waitKey(1) == 27: break
+        with lock:
+            frame = img.copy()
 
     cap.release()
-    pwm.stop()
-    GPIO.cleanup()
-    cv2.destroyAllWindows()
 
-if __name__ == "__main__":
-    main()
+# =========================
+# HILO 2: PROCESAMIENTO
+# =========================
+def processing_thread():
+    global frame, running
+
+    # Rangos HSV
+    rojo1 = ([0,150,150],[10,255,255])
+    rojo2 = ([170,150,150],[180,255,255])
+    amarillo = ([15,20,180],[40,120,255])
+    verde = ([40,100,100],[80,255,255])
+
+    estado_confirmado = ""
+    ultimo_cambio = time.time()
+
+    kernel = np.ones((5,5), np.uint8)
+
+    while running:
+        if frame is None:
+            continue
+
+        with lock:
+            img = frame.copy()
+
+        # ROI (ajústalo si hace falta)
+        roi = img[50:250, 150:300]
+
+        hsv = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
+
+        # ROJO (doble rango)
+        m_r1 = cv2.inRange(hsv, np.array(rojo1[0]), np.array(rojo1[1]))
+        m_r2 = cv2.inRange(hsv, np.array(rojo2[0]), np.array(rojo2[1]))
+        m_r = m_r1 + m_r2
+
+        # AMARILLO
+        m_a = cv2.inRange(hsv, np.array(amarillo[0]), np.array(amarillo[1]))
+
+        # VERDE
+        m_v = cv2.inRange(hsv, np.array(verde[0]), np.array(verde[1]))
+
+        # FILTRO DE RUIDO
+        m_r = cv2.morphologyEx(m_r, cv2.MORPH_OPEN, kernel)
+        m_a = cv2.morphologyEx(m_a, cv2.MORPH_OPEN, kernel)
+        m_v = cv2.morphologyEx(m_v, cv2.MORPH_OPEN, kernel)
+
+        # CONTEO
+        conteos = {
+            "ROJO": cv2.countNonZero(m_r),
+            "AMARILLO": cv2.countNonZero(m_a),
+            "VERDE": cv2.countNonZero(m_v)
+        }
+
+        estado_actual = max(conteos, key=conteos.get)
+
+        # UMBRAL RELATIVO
+        area_total = roi.shape[0] * roi.shape[1]
+        if conteos[estado_actual] < 0.01 * area_total:
+            estado_actual = "APAGADO"
+
+        # ESTABILIDAD POR TIEMPO
+        if estado_actual != estado_confirmado:
+            if time.time() - ultimo_cambio > 0.5:
+                estado_confirmado = estado_actual
+                ultimo_cambio = time.time()
+
+                # CONTROL MOTOR
+                if estado_confirmado == "VERDE":
+                    pwm.ChangeDutyCycle(100)
+                    print("VERDE → 100%")
+
+                elif estado_confirmado == "AMARILLO":
+                    pwm.ChangeDutyCycle(25)
+                    print("AMARILLO → 25%")
+
+                elif estado_confirmado == "ROJO":
+                    pwm.ChangeDutyCycle(0)
+                    print("ROJO → STOP")
+
+                else:
+                    pwm.ChangeDutyCycle(0)
+                    print("⚫ SIN DETECCIÓN")
+
+        # DEBUG VISUAL
+        cv2.imshow("Frame", img)
+        cv2.imshow("ROI", roi)
+        cv2.imshow("Rojo", m_r)
+        cv2.imshow("Amarillo", m_a)
+        cv2.imshow("Verde", m_v)
+
+        if cv2.waitKey(1) == 27:  # ESC
+            running = False
+
+# =========================
+# MAIN
+# =========================
+t1 = threading.Thread(target=capture_thread)
+t2 = threading.Thread(target=processing_thread)
+
+t1.start()
+t2.start()
+
+t1.join()
+t2.join()
+
+# =========================
+# LIMPIEZA
+# =========================
+pwm.stop()
+GPIO.cleanup()
+cv2.destroyAllWindows()
