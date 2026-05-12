@@ -7,9 +7,6 @@ import threading
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
-# =========================
-# CONFIG MOTOR
-# =========================
 MOTOR_PIN = 18
 
 GPIO.setup(MOTOR_PIN, GPIO.OUT)
@@ -17,27 +14,21 @@ GPIO.setup(MOTOR_PIN, GPIO.OUT)
 pwm = GPIO.PWM(MOTOR_PIN, 100)
 pwm.start(0)
 
-# =========================
-# VARIABLES GLOBALES
-# =========================
 frame = None
 lock = threading.Lock()
 running = True
 
-# =========================
-# HILO 1: CAPTURA
-# =========================
 def capture_thread():
     global frame, running
 
     cap = cv2.VideoCapture(0, cv2.CAP_V4L2)
 
     if not cap.isOpened():
-        print("❌ ERROR: No se pudo abrir la cámara")
+        print("No se pudo abrir la cámara")
         running = False
         return
 
-    print("✅ Cámara iniciada correctamente")
+    print("Cámara iniciada correctamente")
 
     while running:
         ret, img = cap.read()
@@ -51,13 +42,10 @@ def capture_thread():
 
     cap.release()
 
-# =========================
-# HILO 2: PROCESAMIENTO
-# =========================
+
 def processing_thread():
     global frame, running
 
-    # Rangos HSV
     rojo1 = ([0,150,150],[10,255,255])
     rojo2 = ([170,150,150],[180,255,255])
     amarillo = ([15,20,180],[40,120,255])
@@ -75,28 +63,22 @@ def processing_thread():
         with lock:
             img = frame.copy()
 
-        # ROI (ajústalo si hace falta)
         roi = img[50:250, 150:300]
 
         hsv = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
 
-        # ROJO (doble rango)
         m_r1 = cv2.inRange(hsv, np.array(rojo1[0]), np.array(rojo1[1]))
         m_r2 = cv2.inRange(hsv, np.array(rojo2[0]), np.array(rojo2[1]))
         m_r = m_r1 + m_r2
 
-        # AMARILLO
         m_a = cv2.inRange(hsv, np.array(amarillo[0]), np.array(amarillo[1]))
 
-        # VERDE
         m_v = cv2.inRange(hsv, np.array(verde[0]), np.array(verde[1]))
 
-        # FILTRO DE RUIDO
         m_r = cv2.morphologyEx(m_r, cv2.MORPH_OPEN, kernel)
         m_a = cv2.morphologyEx(m_a, cv2.MORPH_OPEN, kernel)
         m_v = cv2.morphologyEx(m_v, cv2.MORPH_OPEN, kernel)
 
-        # CONTEO
         conteos = {
             "ROJO": cv2.countNonZero(m_r),
             "AMARILLO": cv2.countNonZero(m_a),
@@ -105,47 +87,40 @@ def processing_thread():
 
         estado_actual = max(conteos, key=conteos.get)
 
-        # UMBRAL RELATIVO
         area_total = roi.shape[0] * roi.shape[1]
         if conteos[estado_actual] < 0.01 * area_total:
             estado_actual = "APAGADO"
 
-        # ESTABILIDAD POR TIEMPO
         if estado_actual != estado_confirmado:
             if time.time() - ultimo_cambio > 0.5:
                 estado_confirmado = estado_actual
                 ultimo_cambio = time.time()
 
-                # CONTROL MOTOR
                 if estado_confirmado == "VERDE":
                     pwm.ChangeDutyCycle(100)
-                    print("VERDE → 100%")
+                    print("VERDE")
 
                 elif estado_confirmado == "AMARILLO":
                     pwm.ChangeDutyCycle(25)
-                    print("AMARILLO → 25%")
+                    print("AMARILLO")
 
                 elif estado_confirmado == "ROJO":
                     pwm.ChangeDutyCycle(0)
-                    print("ROJO → STOP")
+                    print("ROJO")
 
                 else:
                     pwm.ChangeDutyCycle(0)
-                    print("⚫ SIN DETECCIÓN")
+                    print("SIN DETECCIÓN")
 
-        # DEBUG VISUAL
         cv2.imshow("Frame", img)
         cv2.imshow("ROI", roi)
         cv2.imshow("Rojo", m_r)
         cv2.imshow("Amarillo", m_a)
         cv2.imshow("Verde", m_v)
 
-        if cv2.waitKey(1) == 27:  # ESC
+        if cv2.waitKey(1) == 27:
             running = False
 
-# =========================
-# MAIN
-# =========================
 t1 = threading.Thread(target=capture_thread)
 t2 = threading.Thread(target=processing_thread)
 
@@ -155,9 +130,6 @@ t2.start()
 t1.join()
 t2.join()
 
-# =========================
-# LIMPIEZA
-# =========================
 pwm.stop()
 GPIO.cleanup()
 cv2.destroyAllWindows()
