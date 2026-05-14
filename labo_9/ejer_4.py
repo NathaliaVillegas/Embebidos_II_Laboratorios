@@ -2,42 +2,35 @@ import cv2
 import numpy as np
 
 def main():
-    cap = cv2.VideoCapture('bouncing.mp4.mp4')
-    
-    fgbg = cv2.createBackgroundSubtractorMOG2(history=500, varThreshold=50, detectShadows=True)
+    img = cv2.imread('monedas_2.jpg')
+    if img is None:
+        print("Error al cargar monedas_2.jpg")
+        return
 
-    print("Procesando video... Presiona 'q' para salir.")
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    while cap.isOpened():
-        ret, frame = cap.read()
-        if not ret:
-            break
+    blurred = cv2.GaussianBlur(gray, (11, 11), 0)
 
-        frame = cv2.resize(frame, (600, 400))
-        
-        fgmask = fgbg.apply(frame)
+    edges = cv2.Canny(blurred, 30, 150)
 
-        fgmask = cv2.medianBlur(fgmask, 5) 
-        
-        contours, _ = cv2.findContours(fgmask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    kernel = np.ones((3, 3), np.uint8)
+    edges = cv2.morphologyEx(edges, cv2.MORPH_CLOSE, kernel)
 
-        for cnt in contours:
-            if cv2.contourArea(cnt) > 500:
-                cv2.drawContours(frame, [cnt], -1, (0, 255, 0), 2)
-                
-                M = cv2.moments(cnt)
-                if M["m00"] != 0:
-                    cx = int(M["m10"] / M["m00"])
-                    cy = int(M["m01"] / M["m00"])
-                    cv2.circle(frame, (cx, cy), 5, (0, 0, 255), -1)
+    contours, _ = cv2.findContours(edges.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-        cv2.imshow('Contornos en Movimiento - Julian', frame)
-        cv2.imshow('Mascara de Movimiento', fgmask)
+    conteo = 0
+    for cnt in contours:
+        if cv2.contourArea(cnt) > 1000:
+            conteo += 1
+           
 
-        if cv2.waitKey(1) & 0xFF == 27:
-            break
+    cv2.putText(img, f"Monedas detectadas: {conteo}", (50, 50), 
+                cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0, 0, 255), 3)
 
-    cap.release()
+    print(f"Número de monedas encontradas: {conteo}")
+    cv2.imshow('Conteo de Monedas', img)
+    cv2.imshow('gray', edges)
+    cv2.waitKey(0)
     cv2.destroyAllWindows()
 
 if __name__ == "__main__":
