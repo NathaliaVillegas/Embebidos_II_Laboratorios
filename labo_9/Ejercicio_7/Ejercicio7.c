@@ -307,7 +307,7 @@ int main(void)
             {
                 detener();
                 leds_on();
-                Delay(0.3);
+                Delay(0.25);
                 leds_off();
             }
 
