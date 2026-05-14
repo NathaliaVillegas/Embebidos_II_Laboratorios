@@ -8,8 +8,10 @@ def clasificar_figura(vertices):
         return "Cuadrilatero"
     elif vertices == 5:
         return "Pentagono"
+    elif vertices == 6:
+        return "Hexagono"
     elif vertices > 5:
-        return "Circulo"
+        return "circulo"
     return "Desconocido"
 
 def detectar_color(hsv_val):
@@ -64,7 +66,7 @@ def main():
                 color_hsv = hsv[cy, cx]
                 nombre_color = detectar_color(color_hsv)
                 
-                cv2.drawContours(img, [approx], -1, (0, 0, 0), 3)
+                cv2.drawContours(img, [approx], -1, (255, 0, 0), 3)
                 texto = f"{figura} {nombre_color}"
                 cv2.putText(img, texto, (cx - 40, cy), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2)
     
