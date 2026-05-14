@@ -5,7 +5,7 @@ import time
 
 # ================= UART =================
 # AJUSTA EL PUERTO
-ser = serial.Serial('/dev/ttyAMA0', 9600, timeout=1)
+ser = serial.Serial('/dev/serial0', 9600, timeout=1)
 time.sleep(2)
 
 # ================= VIDEO / CAMARA =================
